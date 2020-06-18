@@ -5,10 +5,12 @@ import Toast from 'react-bootstrap/Toast';
 import Pagination from 'react-bootstrap/Pagination';
 
 import {SettingsContext} from '../../context/settings.js';
+import {LoginContext} from '../auth/context.js';
 
 const List = (props) => {
 
   const settings = useContext(SettingsContext);
+  const authContext = useContext(LoginContext);
 
   const [page, setPage] = useState(0);
 
@@ -41,16 +43,17 @@ const List = (props) => {
     },
   };
 
+  console.log(authContext.can('delete'));
   return (
 
     <>
       {displayList.map(item => (
         <Toast key={item._id} style={styles.toast} onClose={() => props.handleDelete(item._id)}>
-          <Toast.Header>
+          <Toast.Header closeButton={authContext.can('delete') ? true : false}>
             <Badge pill
               style={styles.pill}
               variant={item.complete ? 'danger' : 'success'}
-              onClick={() => props.handleComplete(item._id)}
+              onClick={() => authContext.can('update') && props.handleComplete(item._id)}
             >
               {item.complete ? 'In Progress' : 'Pending'}
             </Badge>

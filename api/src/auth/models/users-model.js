@@ -95,7 +95,8 @@ users.methods.generateToken = function (type) {
     options = { expiresIn: TOKEN_EXPIRE };
   }
 
-  return jwt.sign(token, SECRET, options);
+  // return jwt.sign(token, SECRET, options);
+  return jwt.sign(token, SECRET);
 };
 
 users.methods.can = function (capability) {
