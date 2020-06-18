@@ -19,6 +19,14 @@ body {
   }
 
   #queue {
+    max-height: 100vh;
+    overflow-y: auto;
     width: 400px;
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
   }
 }
