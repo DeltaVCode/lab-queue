@@ -1,0 +1,53 @@
+{
+  "name": "class-32-solution-todo",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "main": "src/index.js",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "base-64": "^0.1.0",
+    "bcrypt": "^5.0.0",
+    "bootstrap": "^4.5.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.19",
+    "mongoose-autopopulate": "^0.12.2",
+    "mongoose-schema-jsonschema": "^1.4.4",
+    "morgan": "^1.10.0",
+    "node-sass": "^4.13.1",
+    "react": "16.9.0",
+    "react-bootstrap": "^1.0.1",
+    "react-cookies": "^0.1.1",
+    "react-dom": "16.9.0",
+    "react-if": "^3.4.3",
+    "react-iframe": "^1.8.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.1.1",
+    "require-directory": "^2.1.1",
+    "superagent": "^5.2.2",
+    "uuid": "^3.3.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node ./api/index.js",
+    "start-react": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
