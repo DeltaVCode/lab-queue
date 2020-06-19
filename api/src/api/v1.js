@@ -27,6 +27,16 @@ router.get('/api/v1/:model/schema', (request, response) => {
 });
 
 
+// Global Push ...
+const broadcastAll = async (model) => {
+  const data = await model.get();
+  const output = {
+    count: data.length,
+    results: data,
+  };
+  io.emit('database', output);
+}
+
 // API Routes
 /**
  * Get a list of records for a given model
@@ -38,6 +48,7 @@ router.get('/api/v1/:model/schema', (request, response) => {
  * @returns {Error}  500 - Server error
  */
 router.get('/api/v1/:model', handleGetAll);
+router.get('/api/v1/:model/refresh', handleRefresh);
 
 /**
  * @route POST /api/v1/:model
@@ -47,12 +58,9 @@ router.get('/api/v1/:model', handleGetAll);
  * @returns {Error}  500 - Unexpected error
  */
 router.post('/api/v1/:model', handlePost);
-
 router.get('/api/v1/:model/:id', handleGetOne);
 router.put('/api/v1/:model/:id', handlePut);
 router.delete('/api/v1/:model/:id', handleDelete);
-
-
 
 // Route Handlers
 function handleGetAll(request, response, next) {
@@ -67,27 +75,42 @@ function handleGetAll(request, response, next) {
     .catch(next);
 }
 
+function handleRefresh(request, response, next) {
+  broadcastAll(request.model);
+  response.status(200).json({});
+}
+
+
 function handleGetOne(request, response, next) {
-  request.model.get({_id:request.params.id})
+  request.model.get({ _id: request.params.id })
     .then(result => response.status(200).json(result[0]))
     .catch(next);
 }
 
 function handlePost(request, response, next) {
   request.model.create(request.body)
-    .then(result => response.status(200).json(result))
+    .then(result => {
+      broadcastAll(request.model);
+      response.status(200).json(result);
+    })
     .catch(next);
 }
 
 function handlePut(request, response, next) {
   request.model.update(request.params.id, request.body)
-    .then(result => response.status(200).json(result))
+    .then(result => {
+      broadcastAll(request.model);
+      response.status(200).json(result);
+    })
     .catch(next);
 }
 
 function handleDelete(request, response, next) {
   request.model.delete(request.params.id)
-    .then(result => response.status(200).json(result))
+    .then(result => {
+      broadcastAll(request.model);
+      response.status(200).json(result)
+    })
     .catch(next);
 }
 

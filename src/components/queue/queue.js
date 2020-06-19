@@ -8,13 +8,17 @@ import Col from 'react-bootstrap/Col';
 import Form from './form.js';
 import List from './list.js';
 
+import useSocket from '../../hooks/socket';
+
 import useAjax from '../../hooks/ajax.js';
 
 const API = process.env.REACT_APP_API;
 
 const Queue = () => {
 
-  const {request, response} = useAjax();
+  const [publish, subscribe] = useSocket();
+
+  const { request, response } = useAjax();
 
   const [list, setList] = useState([]);
 
@@ -50,36 +54,27 @@ const Queue = () => {
 
   };
 
-  const getQueue = useCallback( async () => {
+  const getQueue = useCallback(async () => {
     const options = {
       method: 'get',
-      url: `${API}/api/v1/queue`,
+      url: `${API}/api/v1/queue/refresh`,
     };
     request(options);
   }, [request]);
 
-
-  // Any time the "response" changes (the hook finds data) this effect runs
-  // If response has a new list, it redraws it.
-  // If not (assume it's a post/put/delete) and re-fetch the whole list
-  useEffect( () => {
-    if ( response.results ) {
-      response.results && setList(response.results);
-    }
-    else {
-      getQueue();
-    }
-  }, [response, getQueue, setList]);
-
   useEffect(() => {
     let incomplete = list.filter(item => !item.complete).length;
-    document.title = `To Do List: ${incomplete}`;
+    document.title = `CF Lab: ${incomplete}`;
   });
 
   // Runs on app load
-  useEffect( () => {
+  useEffect(() => {
     getQueue();
-  }, [getQueue]);
+    subscribe('database', (payload) => {
+      console.log('got payload', payload)
+      setList(payload.results);
+    });
+  }, [])
 
   return (
     <>
@@ -90,11 +85,11 @@ const Queue = () => {
       </header>
 
       <Container>
-        <Row style={{flexDirection:'column'}}>
-          <Col md="auto" style={{marginTop: '1rem'}}>
+        <Row style={{ flexDirection: 'column' }}>
+          <Col md="auto" style={{ marginTop: '1rem' }}>
             <Form handleSubmit={addItem} />
           </Col>
-          <Col style={{marginTop: '1rem'}}>
+          <Col style={{ marginTop: '1rem' }}>
             <List
               list={list}
               handleComplete={toggleComplete}
