@@ -21,21 +21,15 @@ authRouter.post('/signup', (req, res, next) => {
         email: user.email,
         acl: user.acl,
       };
-      res.cookie('auth', req.token);
-      res.set('auth', req.token);
       res.send({ user: req.user, token: req.token });
     }).catch(next);
 });
 
 authRouter.post('/signin', auth, (req, res, next) => {
-  res.cookie('auth', req.token);
-  res.set('auth', req.token);
   res.status(200).send({ user: req.user, token: req.token });
 });
 
 authRouter.get('/oauth', oauth, (req, res, next) => {
-  res.cookie('auth', req.token);
-  res.set('auth', req.token);
   res.status(200).redirect(`${process.env.REDIRECT_URL}?token=${req.token}`);
 });
 
