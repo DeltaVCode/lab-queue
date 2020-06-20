@@ -43,7 +43,6 @@ const List = (props) => {
     },
   };
 
-  console.log(authContext.can('delete'));
   return (
 
     <>

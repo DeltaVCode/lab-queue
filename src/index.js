@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import App from './app.js';
-// import App from './app-fullscreen.js';
+// import App from './app.js';
+import App from './app-fullscreen.js';
 
 class Main extends React.Component {
   render() {

@@ -6,22 +6,10 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Accordion from 'react-bootstrap/Accordion';
-import { useAccordionToggle } from 'react-bootstrap/AccordionToggle';
 
 const TodoForm = props => {
 
   const { handleChange, handleSubmit } = useForm(props.handleSubmit);
-
-  const toggle = useAccordionToggle(0, () =>
-    console.log('totally custom!'),
-  );
-
-  const formHandler = (e) => {
-    e.preventDefault();
-    // toggle()
-    // handleSubmit(e);
-  }
-
 
   const courses = [
     'Code 201', 'Code 301', 'Code 401 (js)', 'Code 401 (py)', 'Code 401 (c#)', 'Code 401 (java)', 'Ops 201', 'Ops 301', 'Ops 401',
@@ -35,23 +23,23 @@ const TodoForm = props => {
             Request Help
           </Accordion.Toggle>
           <Accordion.Collapse eventKey="0">
-            <Form onSubmit={formHandler}>
+            <Form onSubmit={handleSubmit}>
               <Card style={{ borderLeft: 'none', borderRight: 'none', borderBotom: 'none' }}>
                 <Card.Body>
 
                   <Form.Group controlId="formBasicEmail">
                     <Form.Label>Brief Description</Form.Label>
-                    <Form.Control onChange={handleChange} name="issue" type="text" />
+                    <Form.Control onChange={handleChange} name="issue" type="text" required={true} />
                   </Form.Group>
 
                   <Form.Group controlId="formBasicPassword">
                     <Form.Label>Your Name</Form.Label>
-                    <Form.Control onChange={handleChange} name="student" type="text" placeholder="Student Name" />
+                    <Form.Control onChange={handleChange} name="student" type="text" placeholder="Student Name" required={true} />
                   </Form.Group>
 
                   <Form.Group controlId="formBasicCheckbox">
                     <Form.Label>Course</Form.Label>
-                    <Form.Control as="select" name="course" onChange={handleChange} custom>
+                    <Form.Control as="select" name="course" onChange={handleChange} required={true} custom>
                       <option value="">Select Course Type</option>
                       {courses.map(course =>
                         <option key={course}>{course}</option>,
@@ -61,12 +49,12 @@ const TodoForm = props => {
 
                   <Form.Group controlId="formBasicPassword">
                     <Form.Label>Assignment</Form.Label>
-                    <Form.Control onChange={handleChange} name="assignment" type="text" placeholder="i.e. Lab ## or Challenge ##" />
+                    <Form.Control onChange={handleChange} name="assignment" type="text" placeholder="i.e. Lab ## or Challenge ##" required={true} />
                   </Form.Group>
 
                   <Form.Group controlId="formBasicPassword">
                     <Form.Label>Your Remo Location</Form.Label>
-                    <Form.Control onChange={handleChange} name="location" type="text" placeholder="i.e. 1st Floor, Table 3" />
+                    <Form.Control onChange={handleChange} name="location" type="text" placeholder="i.e. 1st Floor, Table 3" required={true} />
                   </Form.Group>
 
                   <Button variant="primary" type="submit">Add Item</Button>

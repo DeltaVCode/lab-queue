@@ -18,7 +18,7 @@ const Queue = () => {
 
   const [publish, subscribe] = useSocket();
 
-  const { request, response } = useAjax();
+  const { request } = useAjax();
 
   const [list, setList] = useState([]);
 
@@ -71,7 +71,6 @@ const Queue = () => {
   useEffect(() => {
     getQueue();
     subscribe('database', (payload) => {
-      console.log('got payload', payload)
       setList(payload.results);
     });
   }, [])

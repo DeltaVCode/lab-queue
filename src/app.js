@@ -1,7 +1,5 @@
 import React from 'react';
 
-import Iframe from 'react-iframe';
-
 import SettingsContext from './context/settings.js';
 import LoginContext from './components/auth/context.js';
 
