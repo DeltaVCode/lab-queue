@@ -21,7 +21,7 @@ export default class App extends React.Component {
             height="100%"
             id="remo"
             display="initial"
-            allow="camera;microphone"
+            allow="fullscreen;camera;microphone"
             position="relative" />
           <section id="queue">
             <Queue />

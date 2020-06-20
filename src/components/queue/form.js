@@ -6,10 +6,22 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Accordion from 'react-bootstrap/Accordion';
+import { useAccordionToggle } from 'react-bootstrap/AccordionToggle';
 
 const TodoForm = props => {
 
   const { handleChange, handleSubmit } = useForm(props.handleSubmit);
+
+  const toggle = useAccordionToggle(0, () =>
+    console.log('totally custom!'),
+  );
+
+  const formHandler = (e) => {
+    e.preventDefault();
+    // toggle()
+    // handleSubmit(e);
+  }
+
 
   const courses = [
     'Code 201', 'Code 301', 'Code 401 (js)', 'Code 401 (py)', 'Code 401 (c#)', 'Code 401 (java)', 'Ops 201', 'Ops 301', 'Ops 401',
@@ -19,12 +31,12 @@ const TodoForm = props => {
     <>
       <Accordion>
         <Card>
-          <Accordion.Toggle style={{cursor:'pointer'}} as={Card.Header} variant="link" eventKey="0">
-              Request Help
+          <Accordion.Toggle style={{ cursor: 'pointer' }} as={Card.Header} variant="link" eventKey="0">
+            Request Help
           </Accordion.Toggle>
           <Accordion.Collapse eventKey="0">
-            <Form onSubmit={handleSubmit}>
-              <Card style={{ width: '18rem' }}>
+            <Form onSubmit={formHandler}>
+              <Card style={{ borderLeft: 'none', borderRight: 'none', borderBotom: 'none' }}>
                 <Card.Body>
 
                   <Form.Group controlId="formBasicEmail">
