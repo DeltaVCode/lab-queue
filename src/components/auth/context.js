@@ -1,5 +1,4 @@
 import React from 'react';
-import cookie from 'react-cookies';
 import jwt from 'jsonwebtoken';
 import axios from 'axios';
 
@@ -24,8 +23,8 @@ class LoginProvider extends React.Component {
   }
 
   login = (username, password) => {
-    const auth = {username, password};
-    axios.post(`${API}/signin`, {}, {auth})
+    const auth = { username, password };
+    axios.post(`${API}/signin`, {}, { auth })
       .then(response => this.validateToken(response?.data?.token))
       .catch(console.error);
   }
@@ -47,14 +46,14 @@ class LoginProvider extends React.Component {
   };
 
   setLoginState = (loggedIn, token, user) => {
-    cookie.save('auth', token);
+    localStorage.addItem('auth', token);
     this.setState({ token, loggedIn, user });
   };
 
   componentDidMount() {
     const qs = new URLSearchParams(window.location.search);
-    const cookieToken = cookie.load('auth');
-    const token = qs.get('token') || cookieToken || null;
+    const authToken = localStorage.getItem('auth');
+    const token = qs.get('token') || authToken || null;
     this.validateToken(token);
   }
 
