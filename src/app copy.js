@@ -16,6 +16,13 @@ export default class App extends React.Component {
     return (
       <LoginContext>
         <SettingsContext>
+          <Iframe url="https://live.remo.co/e/code-fellows-labtime"
+            width="100%"
+            height="100%"
+            id="remo"
+            display="initial"
+            allow="camera;microphone"
+            position="relative" />
           <section id="queue">
             <Queue />
           </section>
