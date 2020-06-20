@@ -46,7 +46,7 @@ class LoginProvider extends React.Component {
   };
 
   setLoginState = (loggedIn, token, user) => {
-    localStorage.addItem('auth', token);
+    localStorage.setItem('auth', token);
     this.setState({ token, loggedIn, user });
   };
 
