@@ -45,6 +45,7 @@ async function exchangeCodeForToken(code) {
     client_secret: CLIENT_SECRET
   };
 
+  console.log(TOKEN_SERVER, queryObj);
   let tokenResponse = await superagent.get(TOKEN_SERVER)
     .query(queryObj)
 
