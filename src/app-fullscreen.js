@@ -13,8 +13,7 @@ import Admin from './components/admin/admin.js';
 
 import './app.scss';
 
-// const url = "https://live.remo.co/e/code-fellows-labtime";
-const url = "about:blank";
+const url = process.env.REACT_APP_LAB_URL;
 
 export default class App extends React.Component {
   render() {
