@@ -39,30 +39,25 @@ module.exports = async function authorize(req, res, next) {
 
 async function exchangeCodeForToken(code) {
 
-  try {
-    const queryObj = {
-      code: code,
-      client_id: CLIENT_ID,
-      client_secret: CLIENT_SECRET
-    };
+  const queryObj = {
+    code: code,
+    client_id: CLIENT_ID,
+    client_secret: CLIENT_SECRET
+  };
 
-    let tokenResponse = await superagent.get(TOKEN_SERVER)
-      .query(queryObj)
+  let tokenResponse = await superagent.get(TOKEN_SERVER)
+    .query(queryObj)
 
-    let access_token = tokenResponse.body.authed_user.access_token;
+  console.log('token response', tokenResponse)
 
-    return access_token;
-  } catch (e) {
-    console.error('Token Get Error', e);
-  }
+  let access_token = tokenResponse.body.authed_user.access_token;
 
+  return access_token;
 
 }
 
 async function getRemoteUserInfo(token) {
 
-  console.log('here, with', token);
-  console.log('go to', REMOTE_API);
   let userResponse =
     await superagent.get(REMOTE_API)
       .query({ token })
