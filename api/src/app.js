@@ -23,8 +23,8 @@ const authRouter = require(`./auth/router.js`);
 const v1Router = require(`./api/v1.js`);
 
 // App Level MW
-app.use(cors());
 app.use(morgan('dev'));
+app.use(cors({ exposedHeaders: 'auth' }));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

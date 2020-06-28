@@ -16,17 +16,50 @@ body {
 
   iframe {
     border: none;
+    flex: 1;
   }
 
   #queue {
+    border-left: 1px solid #ddd;
     max-height: 100vh;
     overflow-y: auto;
-    width: 400px;
+    width: 0px;
+    transition: width .125s linear;
+
+    &.open {
+      width: 450px;
+
+      #handle {
+        right: 450px;
+      }
+    }
+
+    #handle {
+      position: absolute;
+      top: 25%;
+      right: 0;
+      z-index: 1000;
+      transition: left .125s linear;
+    }
 
     header {
       position: sticky;
       top: 0;
       z-index: 1000;
+    }
+
+    .help-form {
+      max-height: 0px;
+      margin-top: .1rem;
+      transition: max-height 0.4s linear;
+
+      &.open-true {
+        max-height: 1500px;
+      }
+
+      &.open-false {
+        overflow: hidden;
+      }
     }
   }
 }

@@ -8,7 +8,7 @@ const useSocket = () => {
 
   const publish = (event, payload) => socket.emit(event, payload);
 
-  return [publish, subscribe];
+  return { publish, subscribe };
 };
 
 export default useSocket;

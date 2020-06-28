@@ -3,7 +3,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const roles = require('./roles-model.js');
 
 const SINGLE_USE_TOKENS = !!process.env.SINGLE_USE_TOKENS;
 const TOKEN_EXPIRE = process.env.TOKEN_LIFETIME || '60m';
@@ -16,15 +15,14 @@ const users = new mongoose.Schema({
   password: { type: String, required: true },
   fullname: { type: String },
   email: { type: String },
-  role: { type: String, default: 'user', enum: ['admin', 'editor', 'writer','user'] },
-}, { toObject: { virtuals: true }, toJSON: { virtuals: true } });
-
-users.virtual('acl', {
-  ref: 'roles',
-  localField: 'role',
-  foreignField: 'role',
-  justOne: true,
+  role: { type: String, default: 'user', enum: ['admin', 'editor', 'writer', 'user'] },
 });
+
+let roles = {
+  user: ['read'],
+  editor: ['read', 'create', 'update'],
+  admin: ['read', 'create', 'update', 'delete']
+}
 
 users.pre('findOne', function () { this.populate('acl'); });
 users.post('save', async function () { await this.populate('acl').execPopulate(); });
@@ -46,10 +44,8 @@ users.statics.createFromOauth = function (record) {
       return user;
     })
     .catch(error => {
-      console.log('Creating new user');
-      let username = record.username;
-      let password = 'phoneybaloney';
-      return this.create({ username, password });
+      console.log('create', record);
+      return this.create(record);
     });
 
 };
@@ -86,16 +82,11 @@ users.methods.generateToken = function (type) {
 
   let token = {
     id: this._id,
-    capabilities: this.acl ? this.acl.capabilities : [],
-    type: type || 'user',
+    name: this.fullname,
+    capabilities: roles[this.role],
+    type: this.role || 'user',
   };
 
-  let options = {};
-  if (type !== 'key' && !!TOKEN_EXPIRE) {
-    options = { expiresIn: TOKEN_EXPIRE };
-  }
-
-  // return jwt.sign(token, SECRET, options);
   return jwt.sign(token, SECRET);
 };
 

@@ -12,13 +12,13 @@ import './app.scss';
 export default class App extends React.Component {
   render() {
     return (
-      <LoginContext>
-        <SettingsContext>
-          <section id="queue">
+      <BrowserRouter>
+        <LoginContext>
+          <SettingsContext>
             <Queue />
-          </section>
-        </SettingsContext>
-      </LoginContext>
+          </SettingsContext>
+        </LoginContext>
+      </BrowserRouter>
     );
   }
 }

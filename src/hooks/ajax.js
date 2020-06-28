@@ -10,13 +10,14 @@ const useAjax = () => {
 
   useEffect(() => {
     async function ajax() {
-      if (!options) { return; }
+      if (!options.url) { return; }
       setIsLoading(true);
       try {
         const res = await axios(options);
         setResponse(res.data);
         setIsLoading(false);
       } catch (error) {
+        console.log('err', error);
         setError(error);
       }
     }

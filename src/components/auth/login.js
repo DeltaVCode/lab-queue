@@ -25,19 +25,7 @@ const Login = (props) => {
           <Button variant="danger" onClick={context.logout}>Log Out</Button>
         </Then>
         <Else>
-          <Form onSubmit={handleSubmit}>
-            <Row>
-              <Col>
-                <Form.Control onChange={handleChange} size="sm" name="username" type="text" placeholder="Username" />
-              </Col>
-              <Col>
-                <Form.Control onChange={handleChange} size="sm" name="password" type="password" />
-              </Col>
-              <Col>
-                <Button type="submit" variant="dark" size="sm">Login</Button>
-              </Col>
-            </Row>
-          </Form>
+          <a href="https://slack.com/oauth/v2/authorize?user_scope=identity.basic+identity.email&client_id=3325550325.1203356294198"><img alt="Sign in with Slack" height="40" width="172" src="https://platform.slack-edge.com/img/sign_in_with_slack.png" srcset="https://platform.slack-edge.com/img/sign_in_with_slack.png 1x, https://platform.slack-edge.com/img/sign_in_with_slack@2x.png 2x" /></a>
         </Else>
       </If>
     </>

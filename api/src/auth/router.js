@@ -8,7 +8,7 @@ const Role = require('./models/roles-model.js');
 const auth = require('./middleware/basic.js');
 const token = require('./middleware/bearer.js');
 const acl = require('./middleware/acl.js');
-const oauth = require('./middleware/oauth/github.js');
+const oauth = require('./middleware/oauth/slack.js');
 
 authRouter.post('/signup', (req, res, next) => {
   let user = new User(req.body);
@@ -30,7 +30,7 @@ authRouter.post('/signin', auth, (req, res, next) => {
 });
 
 authRouter.get('/oauth', oauth, (req, res, next) => {
-  res.status(200).redirect(`${process.env.REDIRECT_URL}?token=${req.token}`);
+  res.status(200).redirect(`${process.env.REACT_APP_WEBSITE}?token=${req.token}`);
 });
 
 authRouter.post('/role', (req, res, next) => {
