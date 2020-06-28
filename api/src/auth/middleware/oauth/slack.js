@@ -39,19 +39,23 @@ module.exports = async function authorize(req, res, next) {
 
 async function exchangeCodeForToken(code) {
 
-  const queryObj = {
-    code: code,
-    client_id: CLIENT_ID,
-    client_secret: CLIENT_SECRET
-  };
+  try {
+    const queryObj = {
+      code: code,
+      client_id: CLIENT_ID,
+      client_secret: CLIENT_SECRET
+    };
 
-  console.log(TOKEN_SERVER, queryObj);
-  let tokenResponse = await superagent.get(TOKEN_SERVER)
-    .query(queryObj)
+    let tokenResponse = await superagent.get(TOKEN_SERVER)
+      .query(queryObj)
 
-  let access_token = tokenResponse.body.authed_user.access_token;
+    let access_token = tokenResponse.body.authed_user.access_token;
 
-  return access_token;
+    return access_token;
+  } catch (e) {
+    console.error('Token Get Error', e);
+  }
+
 
 }
 
