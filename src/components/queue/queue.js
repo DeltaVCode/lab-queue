@@ -116,7 +116,7 @@ const Queue = () => {
     <section id="queue" className={open ? 'open' : ''}>
       <Button onClick={() => setOpen(!open)} id="handle" variant="light">?</Button>
       <header>
-        <Navbar bg="dark" variant="dark">
+        <Navbar bg="dark" variant="dark" justify-content-between>
           <Navbar.Brand href="#home">Help Queue ({list.filter(supportRequest => !supportRequest.complete).length})</Navbar.Brand>
           <Login />
         </Navbar>

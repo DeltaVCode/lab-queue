@@ -34,6 +34,10 @@ app.use(express.static(`${cwd}/build`));
 app.use(authRouter);
 app.use(v1Router);
 
+app.get('/admin', (req, res) => {
+  res.sendFile(`${cwd}/build/index.html`);
+});
+
 // Catchalls
 app.use(notFound);
 app.use(errorHandler);

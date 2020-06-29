@@ -41,7 +41,7 @@ const QueueForm = ({ courses, course, name, addRequest }) => {
                 <Form.Control onChange={handleChange} name="student" type="text" placeholder="Full Name" defaultValue={name} required={true} />
               </Form.Group>
 
-              <When condition={!!(course && courses.length)}>
+              <When condition={!!(courses.length)}>
                 <Form.Group controlId="formCourse">
                   <Form.Label>Course</Form.Label>
                   <Form.Control as="select" name="course" onChange={handleChange} required={true} defaultValue={course}>
