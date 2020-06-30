@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -34,18 +34,18 @@ const Courses = () => {
     request(deleteRequest);
   }
 
-  function _getAll() {
+  const _getAll = useCallback(() => {
     const req = {
       url: `${API}/api/v1/courses`,
       method: 'get'
     }
     request(req);
-  }
+  }, [request]);
 
   // On mount ... get the list
   useEffect(() => {
     _getAll();
-  }, []);
+  }, [_getAll]);
 
   useEffect(() => {
     if (response.count >= 0) {
@@ -54,7 +54,7 @@ const Courses = () => {
     else {
       _getAll();
     }
-  }, [response]);
+  }, [_getAll, response]);
 
   return (
     <>

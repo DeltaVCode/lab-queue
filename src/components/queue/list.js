@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 
 import Badge from 'react-bootstrap/Badge';
 import Toast from 'react-bootstrap/Toast';
+import Auth from '../auth/auth.js';
 
 import { SettingsContext } from '../../context/settings.js';
 import { LoginContext } from '../auth/context.js';
@@ -41,30 +42,46 @@ const List = (props) => {
     },
   };
 
-  function helpWith(id) {
+  function toggleAssigned(item) {
     if (authContext.can('update')) {
-      console.log(authContext);
-      props.handleComplete(id, authContext.user.name);
+      switch (item.status) {
+        case "in-progress":
+          props.handleUnAssign(item._id);
+          break;
+        case "pending":
+          props.handleAssign(item._id);
+          break;
+        default:
+          break;
+      }
     }
   }
+
+  /*
+    handleAssign={assignSupportRequest}
+    handleUnAssign={unAssignSupportRequest}
+    handleComplete={completeSupportRequest}
+  */
 
   return (
 
     <>
       {displayList.map(item => (
-        <Toast key={item._id} style={styles.toast} onClose={() => props.handleDelete(item._id)}>
+        <Toast key={item._id} style={styles.toast} onClose={() => props.handleComplete(item._id)}>
           <Toast.Header closeButton={authContext.can('delete') ? true : false}>
             <Badge pill
               style={styles.pill}
-              variant={item.complete ? 'danger' : 'success'}
-              onClick={() => helpWith(item._id)}
+              variant={item.status === "in-progress" ? 'danger' : 'success'}
+              onClick={() => toggleAssigned(item)}
             >
-              {item.complete ? `In Progress w/ ${item.assignedTo}` : 'Pending...'}
+              {item.status === "in-progress" ? `In Progress w/ ${item.assignedTo}` : 'Pending...'}
             </Badge>
             <strong className="mr-auto">{item.student}</strong>
           </Toast.Header>
           <Toast.Body >
-            {item.description}
+            <Auth capability="delete">
+              {item.description}
+            </Auth>
             <small style={styles.course}>
               {item.course}
             </small>

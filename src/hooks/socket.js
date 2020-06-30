@@ -2,13 +2,14 @@
 const io = require('socket.io-client');
 const socket = io.connect(process.env.REACT_APP_API);
 
-const useSocket = () => {
+function useSocket() {
 
-  const subscribe = (event, callback) => socket.on(event, callback);
+  function subscribe(event, callback) { socket.on(event, callback); }
 
-  const publish = (event, payload) => socket.emit(event, payload);
+  function publish(event, payload) { socket.emit(event, payload); }
 
   return { publish, subscribe };
+
 };
 
 export default useSocket;
