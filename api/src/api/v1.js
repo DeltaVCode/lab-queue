@@ -29,7 +29,10 @@ router.get('/api/v1/:model/schema', (request, response) => {
 
 // Global Push ...
 const broadcastAll = async (model) => {
-  const data = await model.get({ status: /pending|in-progress/i });
+  const query = { status: /pending|in-progress/i };
+  const options = { sort: "createTime" };
+  const data = await model.get(query, options);
+
   const output = {
     count: data.length,
     results: data,

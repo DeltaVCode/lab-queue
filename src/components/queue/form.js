@@ -31,10 +31,15 @@ const QueueForm = ({ courses, course, name, addRequest }) => {
     handleSubmit(e);
   }
 
-  // Conditionally set the assignment number
   const selectAssignment = (e) => {
+
+    // Conditionally set the assignment number as being required or not.
+    // If the question type is "Other", it's not required. Have to manually
+    // set that here with state, as there's no way to do this dynamically with
+    // a straight form.
     if (e.target.value === "Other") { setClassRequired(false); }
     else { setClassRequired(true); }
+
     // hand off to the actual form handler
     handleChange(e);
   }

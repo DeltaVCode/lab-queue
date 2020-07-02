@@ -36,6 +36,11 @@ const Queue = () => {
     // Defaults.
     supportRequest.student = authContext.user.name;
     supportRequest.course = supportRequest.course || localStorage.getItem('course');
+
+    // Because we're using a ToggleButtonGroup (react-bootstrap), we can't
+    // make the selection of assignment type required (odd that they don't allow it)
+    // So ... it's now set to not-required, and defaulted to Lab visually
+    // as well as here.
     supportRequest.assignment_type = supportRequest.assignment_type || "Lab";
 
     // Store anything valid to LS for next time
